@@ -206,6 +206,7 @@ const ui = mapElements([
   "globalSearch",
   "syncStatus",
   "energySelect",
+  "commandBrief",
   "metricStrip",
   "priorityList",
   "meaningScore",
@@ -451,6 +452,7 @@ function statusLabel(status) {
 function renderAll() {
   renderShell();
   renderView();
+  renderCommandBrief();
   renderMetrics();
   renderPriorities();
   renderSchedule();
@@ -499,6 +501,42 @@ function renderView() {
     button.classList.toggle("active", isActive);
     button.setAttribute("aria-current", isActive ? "page" : "false");
   });
+}
+
+function renderCommandBrief() {
+  const task = activeTask();
+  const nextBlock = state.schedule.find((block) => block.type === "focus") || state.schedule[0];
+  const risks = plannedTasks().filter((item) => item.risk || item.blockers.length).length;
+  const confidence = planConfidence();
+
+  ui.commandBrief.innerHTML = `
+    <div class="brief-main">
+      <span class="eyebrow">Command brief</span>
+      <h2>${escapeHTML(task.title)}</h2>
+      <p>${escapeHTML(task.detail)}. Start at ${escapeHTML(nextBlock.time)} with blockers closed and one owner accountable.</p>
+    </div>
+    <div class="brief-grid">
+      <article>
+        <span>Now</span>
+        <strong>${escapeHTML(task.owner)}</strong>
+        <small>owns the next protected block</small>
+      </article>
+      <article>
+        <span>Plan</span>
+        <strong>${confidence}%</strong>
+        <small>confidence after capacity rules</small>
+      </article>
+      <article>
+        <span>Risk</span>
+        <strong>${risks}</strong>
+        <small>items need attention</small>
+      </article>
+    </div>
+    <button class="primary-btn" data-action="activate-task" data-id="${task.id}" type="button">
+      ${icon("icon-focus")}
+      <span>Open Focus</span>
+    </button>
+  `;
 }
 
 function renderMetrics() {
@@ -651,8 +689,20 @@ function renderBacklog() {
   const tasks = filteredTasks();
   ui.backlogCount.textContent = `${tasks.length} items`;
 
-  ui.backlogTable.innerHTML = tasks
-    .map(
+  const header = `
+    <div class="task-row task-row-header" aria-hidden="true">
+      <span>Task</span>
+      <span>Impact</span>
+      <span>Effort</span>
+      <span>Due</span>
+      <span>Score</span>
+      <span></span>
+    </div>`;
+
+  ui.backlogTable.innerHTML =
+    header +
+    tasks
+      .map(
       (task) => `
       <article class="task-row">
         <div>
@@ -667,8 +717,8 @@ function renderBacklog() {
           ${icon("icon-focus")}
         </button>
       </article>`
-    )
-    .join("");
+      )
+      .join("");
 }
 
 function renderFocus() {

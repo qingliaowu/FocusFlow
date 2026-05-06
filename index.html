@@ -159,6 +159,15 @@
               <svg><use href="#icon-sync"></use></svg>
               Calendar synced
             </span>
+            <button class="icon-btn notification-btn" type="button" aria-label="Notifications">
+              <svg><use href="#icon-bell"></use></svg>
+              <span aria-hidden="true"></span>
+            </button>
+            <div class="avatar-stack" aria-label="Active collaborators">
+              <span>MW</span>
+              <span>OJ</span>
+              <span>NS</span>
+            </div>
             <label class="energy">
               <span>Energy</span>
               <select id="energySelect">
@@ -175,6 +184,7 @@
         </header>
 
         <section class="view active" id="homeView" data-title="Home" data-subtitle="Execution command center for today's highest leverage work.">
+          <section class="command-brief" id="commandBrief" aria-label="Daily command brief"></section>
           <div class="metric-strip" id="metricStrip"></div>
 
           <div class="home-grid">

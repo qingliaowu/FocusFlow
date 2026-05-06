@@ -1,6 +1,6 @@
 # FocusFlow Enterprise
 
-FocusFlow is an enterprise productivity workspace for planning, focus sessions, reflection, insights, goals, and privacy-preserving team analytics. The implementation is a dependency-free web app so it can run anywhere from a static host while still modeling production-grade product behavior.
+FocusFlow is an enterprise productivity workspace for planning, focus sessions, reflection, insights, goals, and privacy-preserving team analytics. The implementation is a dependency-free web app so it can run anywhere from a static host while still delivering production-grade product behavior.
 
 ## Product Surface
 
