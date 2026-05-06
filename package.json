@@ -1,0 +1,10 @@
+{
+  "name": "focusflow-enterprise-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Enterprise-grade FocusFlow productivity app concept implemented as a dependency-free web app.",
+  "scripts": {
+    "check": "node --check app.js && node tests/quality-check.mjs",
+    "serve": "python3 -m http.server 4173"
+  }
+}
